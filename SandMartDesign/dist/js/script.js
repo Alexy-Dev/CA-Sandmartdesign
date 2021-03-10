@@ -18,8 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    function showTabContent(i = 0) {
-        // tabsContent[i].style.display = 'block';
+    function showTabContent(i = 0) {      
         tabsContent[i].classList.add('show', 'fade');
         tabsContent[i].classList.remove('hide');
         tabs[i].classList.add('tabheader__item_active');
@@ -41,92 +40,73 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+//Timer
+const deadLine = '2021-10-11';
 
-const sliders = document.querySelectorAll(".offer__slider"),
-      sliderLeft = document.querySelector(".offer__slider-prev, button"),
-      sliderRight = document.querySelector(".offer__slider-next, button"),
-      sliderNum = document.getElementById("span#total"),
-      sliderNumUp = document.getElementById("span#current"),
-      sliderParent = document.querySelector(".offer__slider-counter"),
-      slideContent = document.querySelectorAll(".offer__slide"),
-      slideWrapper = document.querySelectorAll(".offer__slider-wrapper");
-      
+function getTimeRemaining(endtime) {
+    const t = Date.parse(endtime) - Date.parse(new Date()),
+    days = Math.floor(t / (1000 * 60 * 60 * 24)),
+    hours = Math.floor((t / (1000 * 60 * 60) % 24)), //% дает возможность получить хвостик отбросив целые части
+    minutes = Math.floor((t / 1000 / 60) % 60),
+    seconds = Math.floor((t / 1000) % 60);
 
-  
+    return {
+        'total': t,
+        'days': days,
+        'hours': hours,
+        'minutes': minutes,
+        'seconds': seconds
+    };
+}
 
-    //   function toggleSlider() {
-    //       if (i = 0, i < 4, i++) {
-    //           sliderRight.classList.add('current');
-              
-    //       }          
-    //   }
+function setClock(selector, endtime) {
+    const timer = document.querySelector(selector),
+          days = querySelector('#days'),
+          hours = querySelector('#hours'),
+          minutes = querySelector('#minutes'),
+          seconds = querySelector('#seconds'),
+          timeInterval = setInterval(updateClock, 1000);
 
-      function hideSlideContent() {
-        slideContent.forEach(item => {
-            // item.style.display = 'none';
-            item.classList.add('hide');
-            item.classList.remove('show', 'fade');
-        });
-        
-        // sliders.forEach(item => {
-        //     item.classList.remove('offer__slider-counter');
-        // });
+    function updateClock() {
+        const t = getTimeRemaining(endtime);
 
+        days.innerHTML = t.days;
+        hours.innerHTML = t.hour;
+        minutes.innerHTML = t.minutes;
+        seconds.innerHTML = t.seconds;
+
+        if (t.total <= 0) {
+            clearInterval(timeInterval);
+        }
     }
 
-    function showSlideContent(i = 0) {
-        // tabsContent[i].style.display = 'block';
-        slideContent[i].classList.add('show', 'fade');
-        slideContent[i].classList.remove('hide');
-    }
+}
 
-    
+setClock('.timer', deadLine);
+// const sliders = document.querySelectorAll(".offer__slider"),
+//       sliderLeft = document.querySelector(".offer__slider-prev, button"),
+//       sliderRight = document.querySelector(".offer__slider-next, button"),
+//       sliderNum = document.getElementById("span#total"),
+//       sliderNumUp = document.getElementById("span#current"),
+//       sliderParent = document.querySelector(".offer__slider-counter"),
+//       slideContent = document.querySelectorAll(".offer__slide"),
+//       slideWrapper = document.querySelectorAll(".offer__slider-wrapper");
 
-    hideSlideContent();
-    showSlideContent(); 
-    // toggleSlider();     
 
-        // sliders.addEventListener('click', (event) => {
-        //     if (i = 0, i < 4, i++) {
-        //         sliderNum.classList.add('current');   
-        //   }
-        // });
+//       function hideSlideContent() {
+//         slideContent.forEach(item => {
+//             // item.style.display = 'none';
+//             item.classList.add('hide');
+//             item.classList.remove('show', 'fade');
+//         });
+//     }
 
-    //   sliderRight.event = 'click';
-    
-    // slideTabParent.addEventListener('click', (event) => {
-    //     const target = event.target;
+//     function showSlideContent(i = 0) {    
+//         slideContent[i].classList.add('show', 'fade');
+//         slideContent[i].classList.remove('hide');
+//     }
 
-    //     if (target && target.classList.contains('tabheader__item')) {
-    //         sliders.forEach((item, i) => {
-    //             if (target == item) {
-    //                 hideSlideContent();
-    //                 showSlideContent(i);
-    //             }
-    //         });
-    //     }
-    // }
-    
-    sliderParent.addEventListener('click', (event) => {
-        const target = event.target;
+//     hideSlideContent();
+//     showSlideContent(); 
 
-        if (target && target.classList.contains('offer__slider-prev')) {
-            sliderLeft.forEach((item, i) => {
-                if (target == item) {
-                    hideSlideContent();
-                    showSlideContent(i--);
-                }
-                
-            });
-        }
-        else if (target && target.classList.contains('offer__slider-next')) {
-            sliders.forEach((item, i) => {
-                if (target == item) {
-                    hideSlideContent();
-                    showSlideContent(i++);
-                }
-                
-            });
-        }
-    });
 });

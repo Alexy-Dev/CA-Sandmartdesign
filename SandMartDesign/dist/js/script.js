@@ -40,7 +40,7 @@ window.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
-});
+
 
 const sliders = document.querySelectorAll(".offer__slider"),
       sliderLeft = document.querySelector(".offer__slider-prev, button"),
@@ -129,4 +129,4 @@ const sliders = document.querySelectorAll(".offer__slider"),
             });
         }
     });
-    
+});

@@ -99,24 +99,48 @@ setClock('.timer', deadLine);
 
 //Modal
 
-const modalTrigger = document.querySelectorAll('[data-modal]'),  //обращаемся ко всем эллементам, которым мы назначили класс data-modal
+const modalTrigger = document.querySelectorAll('[data-modal]'),  //обращаемся ко всем эллементам, которым мы назначили класс data-modal, если эл. один, то querySelector
       modal = document.querySelector('.modal'),
       modalCloseBtn = document.querySelector('[data-close]');
 
-modalTrigger.forEach(btn => {
+modalTrigger.forEach(btn => {           //если однe и тe же модалку вызывают разные кнопки, помеченные нами data-modal, то псевдомассив перебираем forEach
     btn.addEventListener('click', () => {
-    // modal.classList.add('show');
-    // modal.classList.remove('hide');
+    // modal.classList.add('show');     //включаем 
+    // modal.classList.remove('hide');  //и отключаем свойство display: none; класса .modal
     modal.classList.toggle('show');   //та же логика, но через toggle
     document.body.style.overflow = 'hidden';  //убираем прокрутку на время работы модалки
     });
 });
 
-modalCloseBtn.addEventListener('click', () => {
-    // modal.classList.add('hide');
-    // modal.classList.remove('show');
-    modal.classList.toggle('show');   //та же логика, но через toggle
-    document.body.style.overflow = '';
-});
+function closeModal() {                 //чтобы не повторяться, засовываем алгоритм закрывания в функцию
+    modal.classList.toggle('show');  
+    document.body.style.overflow = ''; 
+}
 
+modalCloseBtn.addEventListener('click', closeModal); //указываем функцию closeModal в качестве аргумента
+// modalCloseBtn.addEventListener('click', () => {
+//     // modal.classList.add('hide');
+//     // modal.classList.remove('show');
+//     modal.classList.toggle('show');   //та же логика, но через toggle
+//     document.body.style.overflow = '';      //возвращаем прокрутку в дефолтное состояние
+// });
+
+modal.addEventListener('click',  (e) => {    //не забываем передавать аргумент события event(e)
+        if (e.target === modal) {
+            closeModal();                   //при выполнении условия вызываем функцию
+        }   
+// modal.addEventListener('click', (e) => {    //не забываем передавать аргумент событию
+//     if (e.target === modal) {               //способ выключения модалки при клике на экран
+//         // modal.classList.add('hide');
+//         // modal.classList.remove('show');
+//         modal.classList.toggle('show');
+//         document.body.style.overflow = ''; 
+//     }
+    });
+
+    document.addEventListener('keydown', (e) => {   //закрытие модалки по клавише клавиатуры
+        if (e.code === "Escape" && modal.classList.contains('show')) {    //escape, и при открытой модалке
+        closeModal();           
+        }
+    });
 });

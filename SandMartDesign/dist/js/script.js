@@ -1,12 +1,13 @@
 window.addEventListener('DOMContentLoaded', () => {
 
+    //Tabs
+
     const tabs = document.querySelectorAll('.tabheader__item'),
           tabsContent = document.querySelectorAll('.tabcontent'),
           tabsParent = document.querySelector('.tabheader__items');
 
     function hideTabContent() {
         tabsContent.forEach(item => {
-            // item.style.display = 'none';
             item.classList.add('hide');
             item.classList.remove('show', 'fade');
             
@@ -41,17 +42,17 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
 //Timer
-const deadLine = '2021-10-11';
+const deadLine = '2021-08-01';
 
 function getTimeRemaining(endtime) {
-    const t = Date.parse(endtime) - Date.parse(new Date()),
-    days = Math.floor(t / (1000 * 60 * 60 * 24)),
-    hours = Math.floor((t / (1000 * 60 * 60) % 24)), //% дает возможность получить хвостик отбросив целые части
-    minutes = Math.floor((t / 1000 / 60) % 60),
-    seconds = Math.floor((t / 1000) % 60);
+    const t = Date.parse(endtime) - Date.parse(new Date()), //вычисляем разницу между дедлайном и текущей датой
+          days = Math.floor(t / (1000 * 60 * 60 * 24)), //метод получения целых частей (дней) с округлением
+          hours = Math.floor((t / (1000 * 60 * 60) % 24)), //% дает возможность получить хвостик отбросив целые части, которые уходят к дням
+          minutes = Math.floor((t / 1000 / 60) % 60),
+          seconds = Math.floor((t / 1000) % 60);
 
     return {
-        'total': t,
+        'total': t,             //возвращаем наружу полученные ранее значения
         'days': days,
         'hours': hours,
         'minutes': minutes,
@@ -59,54 +60,61 @@ function getTimeRemaining(endtime) {
     };
 }
 
+function getZero(num) {             //функция для добавления 0 к одинарным значениям
+    if (num >= 0 && num < 10) {
+        return `0${num}`;
+    } else {
+        return num;
+    }
+}
+
 function setClock(selector, endtime) {
-    const timer = document.querySelector(selector),
-          days = querySelector('#days'),
-          hours = querySelector('#hours'),
-          minutes = querySelector('#minutes'),
-          seconds = querySelector('#seconds'),
-          timeInterval = setInterval(updateClock, 1000);
+    const timer = document.querySelector(selector),  //распределяем значения по селекторам
+          days = timer.querySelector('#days'),
+          hours = timer.querySelector('#hours'),
+          minutes = timer.querySelector('#minutes'),
+          seconds = timer.querySelector('#seconds'),
+          timeInterval = setInterval(updateClock, 1000); //обновление каждую секкунду
 
+    updateClock(); //убираем моргание экрана, когда мы видим то что было в верстке в течении 1 сек
     function updateClock() {
-        const t = getTimeRemaining(endtime);
+        const t = getTimeRemaining(endtime);    //расчет оставшегося времени
 
-        days.innerHTML = t.days;
-        hours.innerHTML = t.hour;
-        minutes.innerHTML = t.minutes;
-        seconds.innerHTML = t.seconds;
+        // days.innerHTML = t.days;                //помещаем значения на страницу
+        // hours.innerHTML = t.hours;
+        // minutes.innerHTML = t.minutes;
+        // seconds.innerHTML = t.seconds;
+        days.innerHTML = getZero(t.days);                //помещаем значения на страницу c добавлением 0 к одинарным значениям
+        hours.innerHTML = getZero(t.hours);
+        minutes.innerHTML = getZero(t.minutes);
+        seconds.innerHTML = getZero(t.seconds);
 
-        if (t.total <= 0) {
+        if (t.total <= 0) {                     //добавляем условие остановки для закончевшегося таймера
             clearInterval(timeInterval);
         }
     }
-
 }
 
 setClock('.timer', deadLine);
-// const sliders = document.querySelectorAll(".offer__slider"),
-//       sliderLeft = document.querySelector(".offer__slider-prev, button"),
-//       sliderRight = document.querySelector(".offer__slider-next, button"),
-//       sliderNum = document.getElementById("span#total"),
-//       sliderNumUp = document.getElementById("span#current"),
-//       sliderParent = document.querySelector(".offer__slider-counter"),
-//       slideContent = document.querySelectorAll(".offer__slide"),
-//       slideWrapper = document.querySelectorAll(".offer__slider-wrapper");
 
+//Modal
 
-//       function hideSlideContent() {
-//         slideContent.forEach(item => {
-//             // item.style.display = 'none';
-//             item.classList.add('hide');
-//             item.classList.remove('show', 'fade');
-//         });
-//     }
+const modalTrigger = document.querySelectorAll('[data-modal]'),  //обращаемся ко всем эллементам, которым мы назначили класс data-modal
+      modal = document.querySelector('.modal'),
+      modalCloseBtn = document.querySelector('[data-close]');
 
-//     function showSlideContent(i = 0) {    
-//         slideContent[i].classList.add('show', 'fade');
-//         slideContent[i].classList.remove('hide');
-//     }
+modalTrigger.addEventListener('click', () => {
+    // modal.classList.add('show');
+    // modal.classList.remove('hide');
+    modal.classList.toggle('show');   //та же логика, но через toggle
+    document.body.style.overflow = 'hidden';  //убираем прокрутку на время работы модалки
+});
 
-//     hideSlideContent();
-//     showSlideContent(); 
+modalCloseBtn.addEventListener('click', () => {
+    // modal.classList.add('hide');
+    // modal.classList.remove('show');
+    modal.classList.toggle('show');   //та же логика, но через toggle
+    document.body.style.overflow = '';
+});
 
 });

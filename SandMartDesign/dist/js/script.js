@@ -103,13 +103,22 @@ const modalTrigger = document.querySelectorAll('[data-modal]'),  //обраща�
       modal = document.querySelector('.modal'),
       modalCloseBtn = document.querySelector('[data-close]');
 
-modalTrigger.forEach(btn => {           //если однe и тe же модалку вызывают разные кнопки, помеченные нами data-modal, то псевдомассив перебираем forEach
-    btn.addEventListener('click', () => {
-    // modal.classList.add('show');     //включаем 
-    // modal.classList.remove('hide');  //и отключаем свойство display: none; класса .modal
+// modalTrigger.forEach(btn => {           //если однe и тe же модалку вызывают разные кнопки, помеченные нами data-modal, то псевдомассив перебираем forEach
+//     btn.addEventListener('click', () => {
+//     // modal.classList.add('show');     //включаем 
+//     // modal.classList.remove('hide');  //и отключаем свойство display: none; класса .modal
+//     // modal.classList.toggle('show');   //та же логика, но через toggle
+//     // document.body.style.overflow = 'hidden';  //убираем прокрутку на время работы модалки
+//     });
+// });
+
+function openModal() {                  //чтобы не повторяться, засовываем алгоритм открывания в функцию
     modal.classList.toggle('show');   //та же логика, но через toggle
-    document.body.style.overflow = 'hidden';  //убираем прокрутку на время работы модалки
-    });
+    document.body.style.overflow = 'hidden';
+    // clearInterval(modalTimerId);      //если окно уже было открыто, то повторного показа не будет
+}
+modalTrigger.forEach(btn => {           //если однe и тe же модалку вызывают разные кнопки, помеченные нами data-modal, то псевдомассив перебираем forEach
+    btn.addEventListener('click', openModal);
 });
 
 function closeModal() {                 //чтобы не повторяться, засовываем алгоритм закрывания в функцию
@@ -121,7 +130,7 @@ modalCloseBtn.addEventListener('click', closeModal); //указываем фун
 // modalCloseBtn.addEventListener('click', () => {
 //     // modal.classList.add('hide');
 //     // modal.classList.remove('show');
-//     modal.classList.toggle('show');   //та же логика, но через toggle
+//     modal.classList.toggle('show');   //та же логика, но через toggle, только для простых решений
 //     document.body.style.overflow = '';      //возвращаем прокрутку в дефолтное состояние
 // });
 
@@ -143,4 +152,20 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
         closeModal();           
         }
     });
+
+    // const modalTimer = setTimeout(openModal, 3000); //добавляем setTimeout для открытия модалки по истечении времени
+
+    function showModalByScroll() {
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) { //для события по прокрутке экрана до конца
+            openModal();
+            window.removeEventListener('scroll', showModalByScroll);
+        }
+    }
+    window.addEventListener('scroll', showModalByScroll);
+    // window.addEventListener('scroll', () => {
+    //     if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) { //для события по прокрутке экрана до конца
+    //         openModal();
+    //     }
+    // // }, {once: true});           //добавляем условие для того, чтобы убрать повторный показы при прокрутке до конца, но scroll на window, поэтому при малейшей прокрутке условие обновляется
+    // }); 
 });

@@ -162,10 +162,78 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
         }
     }
     window.addEventListener('scroll', showModalByScroll);
+
     // window.addEventListener('scroll', () => {
     //     if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) { //для события по прокрутке экрана до конца
     //         openModal();
     //     }
     // // }, {once: true});           //добавляем условие для того, чтобы убрать повторный показы при прокрутке до конца, но scroll на window, поэтому при малейшей прокрутке условие обновляется
     // }); 
+
+    //sliders
+
+    const prev = document.querySelector(".offer__slider-prev"),
+          next = document.querySelector(".offer__slider-next"),
+          slides = document.querySelectorAll(".offer__slide"),
+          total = document.querySelector('#total'),
+          current = document.querySelector('#current');
+
+
+    let slideIndex = 1; //чтобы не начинать нумерацию с 0
+    
+    showSlides(slideIndex);
+
+    if (slides.length < 10) {
+        total.textContent = `0${slides.length}`;
+    } else {
+        total.textContent = slides.length;
+    }
+
+  
+
+
+    //   function hideSlides() {
+    //     slides.forEach(item => {
+    //         // item.style.display = 'none';
+    //         item.classList.add('hide');
+    //         item.classList.remove('show', 'fade');
+    //     });
+        
+    // }
+
+    function showSlides(n) {
+      
+        if (n > slides.length) {
+            slideIndex = 1; 
+        }
+        if (n < 1) {
+            slideIndex = slides.length;
+        }
+        slides.forEach(item => item.style.display = 'none');
+        slides[slideIndex - 1].style.display = 'block';
+        // slides.classList.add('show', 'fade');
+        // slides.classList.remove('hide');
+        if (slides.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+    }
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+    
+
+    // hideSlides();
+    // showSlides(); 
+    prev.addEventListener('click', () => {
+        plusSlides(1);
+    });
+
+    next.addEventListener('click', () => {
+        plusSlides(1);
+    });
+
+
 });

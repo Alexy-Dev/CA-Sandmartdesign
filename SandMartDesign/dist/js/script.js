@@ -103,11 +103,13 @@ const modalTrigger = document.querySelectorAll('[data-modal]'),  //обраща�
       modal = document.querySelector('.modal'),
       modalCloseBtn = document.querySelector('[data-close]');
 
-modalTrigger.addEventListener('click', () => {
+modalTrigger.forEach(btn => {
+    btn.addEventListener('click', () => {
     // modal.classList.add('show');
     // modal.classList.remove('hide');
     modal.classList.toggle('show');   //та же логика, но через toggle
     document.body.style.overflow = 'hidden';  //убираем прокрутку на время работы модалки
+    });
 });
 
 modalCloseBtn.addEventListener('click', () => {

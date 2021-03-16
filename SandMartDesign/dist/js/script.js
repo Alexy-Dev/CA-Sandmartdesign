@@ -313,4 +313,84 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
     });
 
 
+    //CALCULATOR
+
+    const result = document.querySelector('.calculating__result span');
+        //   btnOrder = document.querySelectorAll('.calculating__choose-item'),
+        // //   allResults = document.querySelectorAll('.calculating__choose-item_active'),
+        //   btnParent = document.querySelectorAll('.calculating__choose'),
+        //   assortInput = document.getElementById('#[assort]'),
+    // let iHave = document.getElementById('#iHave'),
+    //     iNeed = document.getElementById('#iNeed');
+
+    let name, logo, tm, style, site, pack, ratio, assortChoose, assortPack = 1;
+
+    function sum() {
+        const result = 0;
+        for (let i = 0; i < 20; i++) {
+            result.textContent = sum(i);
+            }
+    }
+    function calcTotal() {
+        if (name === 'nameHave') {
+            result.textContent = 0;
+        } else {
+            result.textContent = i++;
+        }
+    }
+    calcTotal(i = 1);
+
+    function getStaticInformation(parentSelector, activeClass) {            //получение данных со статичных объектов
+        const elements = document.querySelectorAll(`${parentSelector} div`);
+
+        document.querySelector(parentSelector).addEventListener('click', (e) => {
+            if (e.target.getAttribute('data-ratio')) {
+                ratio = +e.target.getAttribute('data-ratio');   //если в диве несколько объектов, то обращаемся к data-ratio
+            }  else {
+                brand = e.target.getAttribute('id');            //если в диве 2 объекта, то обращаемся к уникальному 'id'
+                logo = e.target.getAttribute('id');
+                tm = e.target.getAttribute('id');
+                stile = e.target.getAttribute('id');
+                site = e.target.getAttribute('id');
+                pack = e.target.getAttribute('id');
+            }
+
+            // console.log(ratio, brand);
+
+            elements.forEach(elem => {
+                elem.classList.remove(activeClass);
+            });
+
+            e.target.classList.add(activeClass);
+
+        });
+        calcTotal();
+    }
+
+    getStaticInformation('#brand', 'calculating__choose-item_active');
+    getStaticInformation('#logo', 'calculating__choose-item_active');
+    getStaticInformation('#tm', 'calculating__choose-item_active');
+    getStaticInformation('#style', 'calculating__choose-item_active');
+    getStaticInformation('#site', 'calculating__choose-item_active');
+    getStaticInformation('#pack', 'calculating__choose-item_active');
+    getStaticInformation('.calculating__choose_big', 'calculating__choose-item_active');
+
+    function getDynamicInformation(selector) {
+        const input = document.querySelector(selector);
+
+        input.addEventListener('input', () => {
+            switch(input.getAttribute('id')) {
+                case 'assortPack':
+                    assortPack = +input.value;
+                    break;
+                case 'assortChoose':
+                    assortChoose = +input.value;
+                    break;
+            }
+            console.log(assortChoose, assortPack, result.textContent);
+        });
+        calcTotal();
+    } 
+    getDynamicInformation('#assortPack');
+    getDynamicInformation('#assortChoose');      
 });

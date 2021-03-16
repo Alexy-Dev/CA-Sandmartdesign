@@ -325,17 +325,19 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
 
     let name, logo, tm, style, site, pack, ratio, assortChoose, assortPack = 1;
 
-    function sum() {
-        const result = 0;
-        for (let i = 0; i < 20; i++) {
-            result.textContent = sum(i);
-            }
-    }
+    // function sum() {
+    //     const result = 0;
+    //     for (let i = 0; i < 20; i++) {
+    //         result.textContent = sum(i);
+    //         }
+    // }
     function calcTotal() {
         if (name === 'nameHave') {
-            result.textContent = 0;
-        } else {
-            result.textContent = i++;
+            result.textContent = i;
+        } if (name === 'nameNeed') {
+            result.textContent = (i + 1);
+        }  else {
+            result.textContent = '__';
         }
     }
     calcTotal(i = 1);
@@ -343,31 +345,35 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
     function getStaticInformation(parentSelector, activeClass) {            //получение данных со статичных объектов
         const elements = document.querySelectorAll(`${parentSelector} div`);
 
-        document.querySelector(parentSelector).addEventListener('click', (e) => {
-            if (e.target.getAttribute('data-ratio')) {
-                ratio = +e.target.getAttribute('data-ratio');   //если в диве несколько объектов, то обращаемся к data-ratio
-            }  else {
-                brand = e.target.getAttribute('id');            //если в диве 2 объекта, то обращаемся к уникальному 'id'
-                logo = e.target.getAttribute('id');
-                tm = e.target.getAttribute('id');
-                stile = e.target.getAttribute('id');
-                site = e.target.getAttribute('id');
-                pack = e.target.getAttribute('id');
-            }
-
-            // console.log(ratio, brand);
-
-            elements.forEach(elem => {
-                elem.classList.remove(activeClass);
+        elements.forEach(elem => {
+            elem.addEventListener('click', (e) => {
+                if (e.target.getAttribute('data-ratio')) {
+                    ratio = +e.target.getAttribute('data-ratio');   //если в диве несколько объектов, то обращаемся к data-ratio
+                }  else {
+                    name = e.target.getAttribute('id');            //если в диве 2 объекта, то обращаемся к уникальному 'id'
+                    logo = e.target.getAttribute('id');
+                    tm = e.target.getAttribute('id');
+                    stile = e.target.getAttribute('id');
+                    site = e.target.getAttribute('id');
+                    pack = e.target.getAttribute('id');
+                }
+    
+  
+                elements.forEach(elem => {
+                    elem.classList.remove(activeClass);
+                });
+    
+                e.target.classList.add(activeClass);
+                result.textContent = i++;
+    
             });
-
-            e.target.classList.add(activeClass);
+            calcTotal();
 
         });
-        calcTotal();
-    }
 
-    getStaticInformation('#brand', 'calculating__choose-item_active');
+        }
+
+    getStaticInformation('#name', 'calculating__choose-item_active');
     getStaticInformation('#logo', 'calculating__choose-item_active');
     getStaticInformation('#tm', 'calculating__choose-item_active');
     getStaticInformation('#style', 'calculating__choose-item_active');
@@ -386,11 +392,12 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
                 case 'assortChoose':
                     assortChoose = +input.value;
                     break;
-            }
-            console.log(assortChoose, assortPack, result.textContent);
+            } 
+            calcTotal();        
         });
-        calcTotal();
+        
     } 
     getDynamicInformation('#assortPack');
-    getDynamicInformation('#assortChoose');      
+    getDynamicInformation('#assortChoose');
+         
 });

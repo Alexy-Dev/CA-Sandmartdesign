@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design</title>
+    <title>creative agency sandmartdesign</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -13,15 +13,15 @@
                 <img src="icons/logo.svg" alt="Логотип">
             </div>
             <nav class="header__links">
-                <a href="#" class="header__link">О нас</a>
-                <a href="#" class="header__link">Наши проекты</a>
+                <a id="aboute" href="#" class="header__link">О нас</a>
+                <a id="project" href="#" class="header__link">Наши проекты</a>
             </nav>
         </div>
         <div class="header__right-block">
             <button data-modal class="btn btn_white">Связаться с нами</button>
         </div>
     </header>
-    <div class="sidepanel">
+    <!-- <div class="sidepanel">
         <div class="sidepanel__text"><span>Социальные сети</span></div>
         <div class="sidepanel__divider"></div>
         <a href="#" class="sidepanel__icon">
@@ -30,7 +30,7 @@
         <a href="#" class="sidepanel__icon">
             <img src="icons/facebook.svg" alt="facebook">
         </a>
-    </div>
+    </div> -->
 
     <div class="preview">
         <div class="bgc_blue"></div>
@@ -76,13 +76,13 @@
 
     <div class="divider"></div>
 
-    <div class="offer">
+    <div class="offer" id="off">
         <div class="bgc_y"></div>
         <div class="container">
             <div class="offer__text">
-                <h2 class="title">Что мы можем вам предложить?</h2>
+                <h2 class="title">О нас</h2>
                 <div class="offer__descr">
-                   Наша основная миссия - это создание дизайнов, которые украшают повседневную жизнь человека. Наша специализация - продукты питания (FMCG), и в этом направлении мы создали много успешных брендов. Конечно мы с удовольствием работаем со всеми, кто нуждается в брендах и упаковке, и не работаем только с алкоголем, табачными изделиями и на вчера(создание красоты требует своего времени!!!). Мы не просто креатив и дизайн, мы сервис по разработке сильного рыночного продукта! Мы тщательно анализируем рынок, на котором предстоит работать, его тенденции и тренды. И предлагаем решения, которые легко занимают свое место в рынке, будь то массовый продукт или продукт нишевого спроса. Обратившись к нам Вы получите не просто бренд, в первую очередь Вы получите красивый и сильный рыночный продукт.
+                   Мы - креативное агентство sandmartdesign. Более 20 лет мы разрабатываем и запускаем в производство бренды! Подобно песочным часам мы по крупице просеиваем огромное количество информации и идей, чтобы найти красивое решение в каждом проекте. Наша основная миссия - это создание дизайнов, которые украшают повседневную жизнь человека. Наша специализация - продукты питания (FMCG), и в этом направлении мы создали много успешных брендов. Конечно мы с удовольствием работаем со всеми, кто нуждается в брендах и упаковке, и не работаем только с алкоголем, табачными изделиями и "на вчера"(создание красоты требует своего времени!!!).  Мы не стремимся к рекламным наградам, главная награда - успех разработанных нами брендов.
                 </div>
             </div>
             <div class="offer__action">
@@ -91,20 +91,21 @@
         </div>
         <div class="container">
             <div class="offer__advantages">
-                <h2>О нас</h2>
+                <h2>Что мы можем вам предложить?</h2>
                 <div class="offer__advantages-text">
-                    Более 20 лет мы разрабатываем и запускаем в производство бренды! Подобно песочным часам мы по крупице просеиваем огромное количество информации и идей, чтобы найти красивое решение в каждом проекте. Мы не стремимся к рекламным наградам, главная награда - успех разработанных нами брендов.
+                    Мы не просто креатив и дизайн, мы сервис по разработке сильного рыночного продукта! Мы тщательно анализируем рынок, на котором предстоит работать, его тенденции и тренды, и предлагаем решения, которые легко занимают свое место в рынке, будь-то массовый продукт или продукт нишевого спроса. Обратившись к нам Вы получите не просто брендбук, в первую очередь вы получите красивый и сильный рыночный продукт.
                 </div>
                 <h2>О главном</h2>
                 <div class="offer__advantages-text">
-                    Мы верим что креатив, красота и грамотное позиционирование спасут мир!!!
+                    Мы верим что креатив, красота и грамотное позиционирование спасут мир!
                 </div>
             </div>
             <div class="offer__slider">
-                <div class="offer__slider-counter">
+                <h2 id="project">Наши проекты</h2>
+                <div class="offer__slider-counter">                    
                     <div class="offer__slider-prev" type="button">
                         <img src="icons/left.svg" alt="prev">
-                    </div>
+                    </div>                    
                     <span id="current">03</span>
                     /
                     <span id="total">04</span>
@@ -200,7 +201,9 @@
                 <div class="calculating__choose calculating__choose_big">
                     <div data-ratio="1" id="glass" class="calculating__choose-item">Стекло </div>
                     <div data-ratio="2" id="still"  class="calculating__choose-item calculating__choose-item_active">Металл</div>
-                    <div data-ratio="3" id="craft" class="calculating__choose-item">Картон</div>
+                </div>
+                    <div class="calculating__choose calculating__choose_big">
+                        <div data-ratio="3" id="craft" class="calculating__choose-item">Картон</div>
                     <div data-ratio="4" id="plast" class="calculating__choose-item">Пластик</div>
                 </div>
 
@@ -317,7 +320,7 @@
                 <a href="#" class="link">facebook</a>
             </div>
             <div class="pepper">
-                <img src="icons/veg.svg" alt="pepper">
+                <img src="" alt="sandmartdesign 2006-2021">
             </div>
             <div class="call">
                 <div class="subtitle">Или позвоните нам</div>
@@ -340,5 +343,6 @@
         </div>
     </div>
     <script src="js/script.js"></script>
+    <!-- <script src="js/btnscript.js"></script> -->
 </body>
 </html>

@@ -217,7 +217,7 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
         "img/tabs/vegy.jpg",
         "vegy",
         "Упаковка для линейки продукции",
-        "Отличная возможность для тех у кого уже есть ТМ, создать новую линейку продукции. Как для уже известного бренда, так и для нового игрока рынка. За месяц мы разработаем для Вас дизайн линейки до 6 ас/позиций (при необходимости фото/иллюстрации - оплачиваются отдельно) и сдадим файлы в производство.",
+        "Отличная возможность для тех у кого уже есть ТМ, создать новую линейку продукции. Как для уже известного бренда, так и для нового игрока рынка. За 1-1,5 месяца мы разработаем для Вас дизайн линейки до 6 ас/позиций (*фото/иллюстрации оплачиваются отдельно) и сдадим файлы в производство.",
         3000,
         '.menu .container'
         //здесь забыли указать общий класс верстки 'menu__item", но он добавился по умолчанию
@@ -225,10 +225,10 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
      ).render(); //усли надо использовать метод только один раз
 
      new MenuCard(
-        "img/tabs/elite.jpg",
-        "elite",
+        "img/tabs/Pack2.jpg",
+        "brandFool",
         "Бренд под ключ!",
-        "Если у Вас есть продукт, который нуждается в имени, упаковке и месте в сердцах покупателей, то это предложение для Вас!!! За 1,5 месяца мы разработаем для Вас FMCG бренд от названия и логотипа, до фирменного стиля и упаковки с 4-6 ассортиментными позициями. (при необходимости создание сайта - оплачивается отдельно) В результате Вы получите брендмануал, с готовыми к производству файлами для успешного старта продукта.",
+        "Если у вас есть продукт, который нуждается в имени, упаковке и месте в сердцах покупателей, то это предложение для Вас!!! За 1,5-2 месяца мы разработаем FMCG бренд от названия и логотипа, до фирменного стиля и упаковки с 4-6 ассортиментными позициями. (*создание сайта - оплачивается отдельно) В результате вы получите брендбук, с готовыми к производству файлами для успешного старта продукта.",
         5000,
         '.menu .container',
         'menu__item'
@@ -239,7 +239,7 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
         "img/tabs/post.jpg",
         "post",
         "Быстрый старт!",
-        "Если у Вас есть название(Имя бренда) и необходимо разработать логотип + фирменный стиль (4-5 позиций), или логотип + упаковку (1-2 позиции), то это предложение отличный выбор. Время выполнения работы 2-3 недели.",
+        "У Вас есть название(имя бренда) и необходимо разработать логотип + фирменный стиль (4-5 позиций), или логотип + упаковка (1-2 позиции), то это предложение отличный выбор. Время выполнения работы 2-4 недели, и вы получите готовые к производству файлы.",
         2000,
         '.menu .container',
         'menu__item'
@@ -316,26 +316,16 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
     //CALCULATOR
 
     const result = document.querySelector('.calculating__result span');
-        //   btnOrder = document.querySelectorAll('.calculating__choose-item'),
-        // //   allResults = document.querySelectorAll('.calculating__choose-item_active'),
-        //   btnParent = document.querySelectorAll('.calculating__choose'),
-        //   assortInput = document.getElementById('#[assort]'),
-    // let iHave = document.getElementById('#iHave'),
-    //     iNeed = document.getElementById('#iNeed');
+       
 
-    let name, logo, tm, style, site, pack, ratio, assortChoose, assortPack = 1;
+    let name, logo, tm, style, site, pack, ratio, assortChoose, assortPack;
 
-    // function sum() {
-    //     const result = 0;
-    //     for (let i = 0; i < 20; i++) {
-    //         result.textContent = sum(i);
-    //         }
-    // }
+
     function calcTotal() {
         if (name === 'nameHave') {
             result.textContent = i;
         } if (name === 'nameNeed') {
-            result.textContent = (i + 1);
+            result.textContent = i;
         }  else {
             result.textContent = '__';
         }
@@ -345,17 +335,18 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
     function getStaticInformation(parentSelector, activeClass) {            //получение данных со статичных объектов
         const elements = document.querySelectorAll(`${parentSelector} div`);
 
-        elements.forEach(elem => {
+        elements.forEach(elem => {                          //перебираем массив, с целью избавиться от ошибок делегирования, которые распространяются на весь див
+
             elem.addEventListener('click', (e) => {
                 if (e.target.getAttribute('data-ratio')) {
                     ratio = +e.target.getAttribute('data-ratio');   //если в диве несколько объектов, то обращаемся к data-ratio
                 }  else {
                     name = e.target.getAttribute('id');            //если в диве 2 объекта, то обращаемся к уникальному 'id'
-                    logo = e.target.getAttribute('id');
-                    tm = e.target.getAttribute('id');
-                    stile = e.target.getAttribute('id');
-                    site = e.target.getAttribute('id');
-                    pack = e.target.getAttribute('id');
+                    // logo = e.target.getAttribute('id');
+                    // tm = e.target.getAttribute('id');
+                    // stile = e.target.getAttribute('id');
+                    // // site = e.target.getAttribute('id');
+                    // pack = e.target.getAttribute('id');
                 }
     
   
@@ -364,9 +355,45 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
                 });
     
                 e.target.classList.add(activeClass);
-                result.textContent = i++;
-    
+                if (e.target.id === 'nameNeed') {
+                    result.textContent = i++;                    
+                } 
+                if (e.target.id === 'nameHave') {
+                    result.textContent = i--;                    
+                } 
+                if (e.target.id === 'logoNeed') {
+                    result.textContent = i++;  
+                }
+                if (e.target.id === 'logoHave') {
+                    result.textContent = i--;                    
+                } 
+                if (e.target.id === 'tmNeed') {
+                    result.textContent = i++;  
+                }
+                if (e.target.id === 'tmHave') {
+                    result.textContent = i--;                    
+                } 
+                if (e.target.id === 'styleNeed') {
+                    result.textContent = i++;  
+                }
+                if (e.target.id === 'styleHave') {
+                    result.textContent = i--;                    
+                } 
+                if (e.target.id === 'siteNeed') {
+                    result.textContent = i++;  
+                }
+                if (e.target.id === 'siteHave') {
+                    result.textContent = i--;                    
+                } 
+                if (e.target.id === 'packNeed') {
+                    result.textContent = i++;  
+                }
+                if (e.target.id === 'packHave') {
+                    result.textContent = i--;                    
+                } 
+                  
             });
+
             calcTotal();
 
         });
@@ -385,6 +412,11 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
         const input = document.querySelector(selector);
 
         input.addEventListener('input', () => {
+            if (input.value.match(/\D/g)) {     //если содержимое инпута не число
+                input.style.border = '1px solid red';
+            } else {
+                input.style.border = 'none';
+            }
             switch(input.getAttribute('id')) {
                 case 'assortPack':
                     assortPack = +input.value;
@@ -399,5 +431,65 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
     } 
     getDynamicInformation('#assortPack');
     getDynamicInformation('#assortChoose');
+
+    //кнопки scrollIntoView
+
+    const  btnAboute = document.querySelector('#aboute'),
+               btnProject = document.querySelector('#project'),        
+               form = document.querySelector('.offer'),
+               formP = document.querySelector('.offer__slider');
+
+       btnAboute.addEventListener('click', (e) => { 
+        e.preventDefault(); 
+        btnAboute.classList.add('header__link:after');
+        btnAboute.classList.remove('header__link');      
+        form.scrollIntoView();
+        console.log(form);
+       });
+       btnProject.addEventListener('click', (e) => { 
+        e.preventDefault();                             //отменяем стандартное поведение эллемента
+        btnProject.classList.add('header__link:after');
+        btnProject.classList.remove('header__link');
+        formP.scrollIntoView();
+        console.log(formP);
+       });
+
+    // const info = document.querySelector('.header__links'),
+    //       aboute = document.querySelectorAll('.header__link'),
+    //       btnProject = document.querySelector('#project'),
+    //       btnAboute = document.querySelector('#aboute'),
+    //       form = document.querySelector('.offer');
+          
+        //   btnAboute.addEventListener('click', (e) => {
+        // //     //   document.scrollTop = 600;
+        
+        // e.scroll.animate({
+        //               scrollTop: 200
+        //           }, 1000);
+        //       });
+         
+            //   btnAboute.addEventListener('click', () => { 
+            //     //   form.scrollIntoView({
+            //     //       block: 'center',
+            //     //       behavior: 'smooth',
+            //     form.scrollIntoView();               //   });
+                  
+            //       const el = document.getElementById('el');
+// form.scrollIntoView({block: "center",behavior: "smooth"}); 
+                
+                // btnAboute.classList.add('header__link:after', 'fade__scroll');
+                // btnAboute.classList.remove('header__link');
+              
+
+                // document.body.offset().top = 600;
+                // document.documentElement('body').scrollTop = '72px';
+                // body.scroll = 'scrollTop: 1172px';
+                // document.documentElement.clientHeight = '1500px';
+                // window.pageYOffset = '1500px';
+                // document.documentElement.scrollHeight = '1500px';
+            //     console.dir(document.body);
+            // });
+
+          
          
 });

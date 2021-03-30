@@ -423,7 +423,8 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
        const forms = document.querySelectorAll('form');
 
        const message = {                            //формируем сообщение для пользователя
-           loading: 'Загрузка',
+           //loading: 'Загрузка',
+           loading: 'img/form/spinner.svg',         //для добавления спинера или картинки просто прописываем путь
            success: 'Спасибо! Скоро мы с Вами свяжемся',
            failure: 'Что-то пошло не так...'
        };
@@ -436,11 +437,18 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
            form.addEventListener('submit', (e) => {      //навешиваем обработчик события 'submit' - которое срабатывает по клику на мышку или клавишу энтер. кнопка "button" - по умолчанию реализует событие "submit", но при этом перезагружает страницу// не интересно
                 e.preventDefault(); //отменяем стандартное поведение объекта
 
-                let statusMessage = document.createElement('div');
-                statusMessage.classList.add('status');
-                statusMessage.textContent = message.loading; //хранилище данных
-                form.append(statusMessage);  //добавляем к форме одно из сообщений из подготовленных для пользователя в const message.
+                // const statusMessage = document.createElement('div');  //если простое сообщение
+                // statusMessage.classList.add('status');
+                //statusMessage.textContent = message.loading; //хранилище данных
                 
+                const statusMessage = document.createElement('img');    //если картинка
+                statusMessage.src = message.loading;
+                statusMessage.style.cssText = `
+                display: block;
+                margin: 0 auto
+                `;
+                //form.append(statusMessage);  //добавляем к форме одно из сообщений из подготовленных для пользователя в const message.
+                form.insertAdjacentElement('afterend', statusMessage); //вставляем спинер после еллемента, на котором он вызывается, чтобы не двигать флексверстку
                 const request = new XMLHttpRequest();
                 request.open('POST', 'js/server.php');
 

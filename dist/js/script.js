@@ -449,11 +449,12 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
                 `;
                 //form.append(statusMessage);  //добавляем к форме одно из сообщений из подготовленных для пользователя в const message.
                 form.insertAdjacentElement('afterend', statusMessage); //вставляем спинер после еллемента, на котором он вызывается, чтобы не двигать флексверстку
-                const request = new XMLHttpRequest();
-                request.open('POST', 'js/server.php');
+                // const request = new XMLHttpRequest();
+                // request.open('POST', 'js/server.php');
 
+               
                 
-                request.setRequestHeader('Content-type', 'application/json; charset=utf-8');  //если данные в формате json
+                // request.setRequestHeader('Content-type', 'application/json; charset=utf-8');  //если данные в формате json
                 const formData = new FormData(form);  //formData - напрямую не конвертируется в json
 
                 const object = {};                      //переведя в обычный объект, мы можем работать с форматом json
@@ -461,24 +462,43 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
                     object[key] = value;
                 });
 
-                const json = JSON.stringify(object);
+                // const json = JSON.stringify(object);
 
-                request.send(json);         //отправляем на сервер. 
+                // request.send(json);         //отправляем на сервер. 
+                
+                fetch('js/server.php', {
+                    method: "POST",
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    // body: formData                  //если простой объект
+                    body:JSON.stringify(object)     //если формат json
+                }).then(data => data.text())        //переводим значения в текст
+                .then(data => {
+                    console.log(data);                        //если в консоли не видно, то надо проверить Network
+                    showThanksModal(message.success);                    
+                    statusMessage.remove();             //удалить спиннер
 
-                request.addEventListener('load', () => {    //отслеживаем загрузку
-                    if (request.status === 200) {
-                        console.log(request.response);                        
-                        showThanksModal(message.success);
-                        form.reset();        //очистить форму после отправки
-                         setTimeout(() => {
-                        statusMessage.remove();  //убрать сообщение через 2 сек
-                        }, 2000);
+                }).catch(() => {                        //полученные промисы не покажут http ошибку, а только поменяют свойство status на false 
+                    showThanksModal(message.failure);       //показать в случае ошибки
+                }).finally(() => {
+                    form.reset();        //очистить форму после отправки
+                });
+
+                // request.addEventListener('load', () => {    //отслеживаем загрузку
+                //     if (request.status === 200) {
+                //         console.log(request.response);                        
+                //         showThanksModal(message.success);
+                //         form.reset();        //очистить форму после отправки
+                //          setTimeout(() => {
+                //         statusMessage.remove();  //убрать сообщение через 2 сек
+                //         }, 2000);
                         
-                    } else {
-                        // statusMessage.textContent = message.failure;
-                        showThanksModal(message.failure);
-                    }
-                });                                
+                //     } else {
+                //         // statusMessage.textContent = message.failure;
+                //         showThanksModal(message.failure);
+                //     }
+                // });                                
            });
        }
        function showThanksModal(message) {
@@ -501,5 +521,6 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
                prevModalDialog.classList.remove('hide');
                closeModal();
            }, 4000);
-       }         
+       }       
+   
 });

@@ -188,7 +188,7 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
     }
 
 
-    //Заполнение карточек через запрос к серверу и db.json !!!
+    //Заполнение карточек через запрос к серверу fetch и db.json !!!
 
     const getResource = async (url) => {          //связка операторов async/await для синхронизации кода
         const res = await fetch(url);
@@ -210,7 +210,7 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
 
     axios.get('http://localhost:3000/menu')
         .then(data => {
-            data.data.forEach(({img, altimg, title, descr, price}) => {
+            data.data.forEach(({img, altimg, title, descr, price}) => {     //внимательно читать документацию data.data !!!
             new MenuCard(img, altimg, title, descr, price,'.menu .container').render()
         });
     });
@@ -280,37 +280,62 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
     //sliders
 
     const prev = document.querySelector(".offer__slider-prev"),
+          slider = document.querySelector('.offer__slider'),
           next = document.querySelector(".offer__slider-next"),
           slides = document.querySelectorAll(".offer__slide"),
           total = document.querySelector('#total'),
-          current = document.querySelector('#current');
+          current = document.querySelector('#current'),
+          slidesWrapper = document.querySelector('.offer__slider-wrapper'),
+          slidesField = document.querySelector('.offer__slider-inner'),
+          width = window.getComputedStyle(slidesWrapper).width;
 
 
     let slideIndex = 1; //чтобы не начинать нумерацию с 0
-    
-    showSlides(slideIndex);
+    let offset = 0;
 
     if (slides.length < 10) {
         total.textContent = `0${slides.length}`;
+        current.textContent = `0${slideIndex}`;
     } else {
         total.textContent = slides.length;
+        current.textContent = slideIndex;
     }
 
-  
+    slidesField.style.width = 100 * slides.length + '%';
+    slidesField.style.display = 'flex';
+    slidesField.style.transition = '0.5s all';
 
+    slidesWrapper.style.overflow = 'hidden';
 
-        function showSlides(n) {
-      
-        if (n > slides.length) {
-            slideIndex = 1; 
+    slides.forEach(slide => {
+        slide.style.width = width;
+    });
+
+    slider.style.position = 'relative';    //добавляем слайдер и привязываем его к окружению
+
+    const indicators = document.createElement('ol'), //создаем эллемент
+          dots = [];                                //создаем массив из точек
+    indicators.classList.add('carousel-indicators'); //помещаем эллемент на страницу
+
+    slider.append(indicators);
+
+    for (let i = 0; i < slides.length; i++) {
+        const dot = document.createElement('li');
+        dot.setAttribute('data-slide-to', i + 1);
+        dot.classList.add('dot');
+        if (i == 0) {
+            dot.style.opacity = 1;
         }
-        if (n < 1) {
-            slideIndex = slides.length;
-        }
-        slides.forEach(item => item.style.display = 'none');
-        slides[slideIndex - 1].style.display = 'block';
-        // slides.classList.add('show', 'fade');
-        // slides.classList.remove('hide');
+        indicators.append(dot);
+        dots.push(dot);        //помещаем каждую созданную в результате цикла точку в массив
+    }
+
+    const Dotactive = function() {
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[slideIndex - 1].style.opacity = 1;
+    }
+
+    const Chekindex = function() {
         if (slides.length < 10) {
             current.textContent = `0${slideIndex}`;
         } else {
@@ -318,18 +343,124 @@ modal.addEventListener('click',  (e) => {    //не забываем перед�
         }
     }
 
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
-    }
     
 
-     prev.addEventListener('click', () => {
-        plusSlides(1);
+    next.addEventListener('click', () => {
+        if(offset == +width.slice(0, width.length - 2) * (slides.length - 1)) {  //width.length ('500px) - 2, чтобы убрать px при приведении к числу
+            offset = 0;
+        } else {
+            offset += +width.slice(0, width.length - 2);
+        }
+        slidesField.style.transform = `translateX(-${offset}px)`;
+
+        if (slideIndex == slides.length) {
+            slideIndex = 1;
+        } else {
+            slideIndex++;
+        }
+
+        // if (slides.length < 10) {
+        //     current.textContent = `0${slideIndex}`;
+        // } else {
+        //     current.textContent = slideIndex;
+        // }
+        Chekindex();
+        // dots.forEach(dot => dot.style.opacity = '.5');
+        // dots[slideIndex - 1].style.opacity = 1;
+        Dotactive();
     });
 
-    next.addEventListener('click', () => {
-        plusSlides(1);
+    prev.addEventListener('click', () => {
+        if (offset == 0){
+            offset = +width.slice(0, width.length - 2) * (slides.length - 1);
+            
+        } else {
+            offset -= +width.slice(0, width.length - 2);
+        }
+        slidesField.style.transform = `translateX(-${offset}px)`;
+
+        
+        if (slideIndex == 1) {
+            slideIndex = slides.length;
+        } else {
+            slideIndex--;
+        }
+
+        // if (slides.length < 10) {
+        //     current.textContent = `0${slideIndex}`;
+        // } else {
+        //     current.textContent = slideIndex;
+        // }
+        Chekindex();
+        // dots.forEach(dot => dot.style.opacity = '.5');
+        // dots[slideIndex - 1].style.opacity = 1;
+        Dotactive();
+        
     });
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            const slideTo = e.target.getAttribute('data-slide-to');
+
+            slideIndex = slideTo;
+            offset = +width.slice(0, width.length - 2) * (slideTo - 1);
+            slidesField.style.transform = `translateX(-${offset}px)`;
+
+            // if (slides.length < 10) {
+            //     current.textContent = `0${slideIndex}`;
+            // } else {
+            //     current.textContent = slideIndex;
+            // }            
+            Chekindex();
+            // dots.forEach(dot => dot.style.opacity = '.5');
+            // dots[slideIndex - 1].style.opacity = 1;
+            Dotactive();
+
+        })
+    })
+    
+    // showSlides(slideIndex);
+
+    // if (slides.length < 10) {
+    //     total.textContent = `0${slides.length}`;
+    // } else {
+    //     total.textContent = slides.length;
+    // }
+
+  
+
+
+    //     function showSlides(n) {
+      
+    //     if (n > slides.length) {
+    //         slideIndex = 1; 
+    //     }
+    //     if (n < 1) {
+    //         slideIndex = slides.length;
+    //     }
+    //     slides.forEach(item => item.style.display = 'none');
+    //     slides[slideIndex - 1].style.display = 'block';
+    //     // slides.classList.add('show', 'fade');
+    //     // slides.classList.remove('hide');
+    //     if (slides.length < 10) {
+    //         current.textContent = `0${slideIndex}`;
+    //     } else {
+    //         current.textContent = slideIndex;
+    //     }
+    // }
+
+    // function plusSlides(n) {
+    //     showSlides(slideIndex += n);
+    // }
+    
+
+    //  prev.addEventListener('click', () => {
+    //     plusSlides(1);
+    // });
+
+    // next.addEventListener('click', () => {
+    //     plusSlides(1);
+    // });
 
 
     //CALCULATOR

@@ -28,7 +28,7 @@
 .preview{padding:50px 0 100px 0;position:relative}
 .preview__life{font-weight:700;font-size:20px;margin-left:35px;margin-top:35px}
 .bgc_blue{position:absolute;right:0;top:-155px;width:50vw;height:910px;background:#dbd7d4;z-index:-1}
-.tabcontainer{display:flex;width:1130px;margin:0 auto;box-shadow:0 4px 30px rgba(0,0,0,.25)}
+.tabcontainer{display:flex;width:1130px;margin:0 auto;box-shadow:0 4px 5px rgba(139, 133, 133, 0.25)}
 .tabcontent{width:850px;position:relative}
 .tabcontent img{width:100%;height:100%;object-fit:cover}
 .tabcontent__descr{position:absolute;top:250px;right:-327px;width:350px;height:justify-content;background:#fee970;padding:50px;font-size:22px;font-weight:300;line-height:36px;color:rgba(0,0,0,.7)}
@@ -39,18 +39,18 @@
 .tabheader__item_active{color:#000;font-size:20px;font-weight:700}
 .offer{padding:70px 0 100px 0;position:relative}
 .offer .container{display:flex;justify-content:space-between}
-.offer .bgc_y{position:absolute;width:1000px;min-height:1000px;background:#fee970;z-index:-1;top:20px}
-.offer__text{width:580px}
+.offer .bgc_y{position:absolute;display:flex;width:50vw;height:100vw;min-width:350px;min-height:1650px;background:#fee970;z-index:-1;top:20px}
+.offer__text{width:40vw;max-width:350px}
 .offer__descr{font-size:18px;margin-top:30px;font-weight:300;line-height:24px}
 .offer__action{display:flex;align-items:center;justify-content:flex-end}
-.offer__advantages{width:330px;margin-top:50px}
+.offer__advantages{width:330px;margin-top:10px}
 .offer__advantages h2{font-weight:700;font-size:18px;margin-top:20px}
 .offer__advantages h2:first-child{margin-top:40px}
-.offer__advantages-text{margin-top:20px;font-size:18px;font-weight:300;line-height:21px}
+.offer__advantages-text{margin-top:20px;font-size:18px;font-weight:300;line-height:21px;overflow-y: auto; max-height: 250px;}
 .offer__slider{width:650px;margin-top:50px;display:flex;flex-direction:column;align-items:flex-end}
 .offer__slider h2{font-size:18px}
 .offer__slider-counter{display:flex;width:180px;align-items:center;font-size:24px;color:rgba(0,0,0,.5)}
-.offer__slider-wrapper{width:100%;margin-top:15px;box-shadow:0 4px 30px rgba(102, 99, 99, 0.25)}
+.offer__slider-wrapper{width:100%;margin-top:15px;box-shadow:0 4px 5px rgba(139, 136, 136, 0.25)}
 .offer__slider-prev{margin-right:10px;cursor:pointer}
 .offer__slider-next{margin-left:10px;cursor:pointer}
 .offer__slider #current{font-size:48px;font-weight:700;color:#000}

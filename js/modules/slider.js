@@ -67,6 +67,28 @@ function deleteWord(str) {
   return +str.replace(/\D/g, '');         //регулярное выражение, вынесенное в функцию
 }
 
+next.addEventListener('submit', () => {
+  //if(offset == +width.slice(0, width.length - 2)) * (slides.length - 1)) { //width.length ('500px') - 2, чтобы убрать px при приведении к числу
+  //const caruselTimerIds = setTimeout(() => ('.submit', caruselTimerId), 5000);
+  //caruselTimerIds();
+  setTimeout((e) => {
+    if(offset == deleteWord(width) * (slides.length - 1)) {  //через регулярное выражение, вынесенное в функцию
+      offset = 0;
+  } else {
+      offset += deleteWord(width);
+  }
+  slidesField.style.transform = `translateX(-${offset}px)`;
+
+  if (slideIndex == slides.length) {
+      slideIndex = 1;
+  } else {
+      slideIndex++;
+  }
+
+  Chekindex();
+  Dotactive();
+}, 3000);
+});
 
 next.addEventListener('click', () => {
   //if(offset == +width.slice(0, width.length - 2)) * (slides.length - 1)) { //width.length ('500px') - 2, чтобы убрать px при приведении к числу
@@ -87,7 +109,7 @@ next.addEventListener('click', () => {
   Dotactive();
 });
 
-prev.addEventListener('click', () => {
+prev.addEventListener('click', () => {  
   if (offset == 0){
       offset = deleteWord(width) * (slides.length - 1);
       

@@ -3,7 +3,7 @@ import modal from './modules/modal';
 import scroll from './modules/scroll';
 import slider from './modules/slider';
 import calc from './modules/calc';
-import cards from './modules/cards';
+// import cards from './modules/cards';
 import forms from './modules/forms';
 import timer from './modules/timer';
 import {openModal} from './modules/modal';
@@ -37,7 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
         field: '.offer__slider-inner'
     });
     calc();
-    cards();
+    // cards();
     forms('form', modalTimerId);
     timer('.timer', '2021-08-01');
 

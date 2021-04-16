@@ -170,85 +170,6 @@ getDynamicInformation('#assortChoose');
 
 /***/ }),
 
-/***/ "./js/modules/cards.js":
-/*!*****************************!*\
-  !*** ./js/modules/cards.js ***!
-  \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/services */ "./js/services/services.js");
-
-
-function cards() {
-    class MenuCard {
-        constructor(src, alt, title, descr, price, parentSelector, ...classes) {
-            this.src = src;
-            this.alt = alt;
-            this.title = title;
-            this.descr = descr;
-            this.price = price;
-            this.classes = classes;
-            this.parent = document.querySelector(parentSelector);
-            this.transfer = 28;
-            this.changeToUAH();
-        }
-
-        changeToUAH() {
-            this.price = this.price * this.transfer;
-
-        }
-
-        render(){
-            const element = document.createElement('div');
-            if(this.classes.length === 0) {                 //для подставления значений по умолчанию прописываем условия для анализа массива, если 0, то чначение по умолчанию
-                this.element = 'menu__item';                //значение по умолчанию
-                element.classList.add(this.element);
-            } else {
-                this.classes.forEach(className => element.classList.add(className));  //чтобы присвоить создаваемому элементу все будущие классы
-            }
-            
-            element.innerHTML = `            
-                    <img src=${this.src} alt=${this.alt}>
-                    <h3 class="menu__item-subtitle">${this.title}</h3>
-                    <div class="menu__item-descr">${this.descr}</div>
-                    <div class="menu__item-divider"></div>
-                    <div class="menu__item-price">
-                        <div class="menu__item-cost">Цена:</div>
-                        <div class="menu__item-total"><span>${this.price}</span> грн</div>
-                    </div>
-            `;
-            this.parent.append(element);
-        }
-    }
-
-
-    //Заполнение карточек через запрос к серверу fetch и db.json !!!
-
-    // const getResource = async (url) => {          //связка операторов async/await для синхронизации кода
-    //     const res = await fetch(url);
-
-    //     if (!res.ok) {
-    //         throw new Error(`Could not fetch ${url} ${res.status}`); //метод избежать невидимой ошибки, когда promise из фетч не реагирует на http ошибки
-    //     }
-    //     return await res.json();
-    // };
-
-    axios.get('http://localhost:3000/menu')
-        .then(data => {
-            data.data.forEach(({img, altimg, title, descr, price}) => {     //внимательно читать документацию data.data !!!
-            new MenuCard(img, altimg, title, descr, price,'.menu .container').render()
-        });
-    });
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (cards);
-
-/***/ }),
-
 /***/ "./js/modules/forms.js":
 /*!*****************************!*\
   !*** ./js/modules/forms.js ***!
@@ -539,6 +460,28 @@ function deleteWord(str) {
   return +str.replace(/\D/g, '');         //регулярное выражение, вынесенное в функцию
 }
 
+next.addEventListener('submit', () => {
+  //if(offset == +width.slice(0, width.length - 2)) * (slides.length - 1)) { //width.length ('500px') - 2, чтобы убрать px при приведении к числу
+  //const caruselTimerIds = setTimeout(() => ('.submit', caruselTimerId), 5000);
+  //caruselTimerIds();
+  setTimeout((e) => {
+    if(offset == deleteWord(width) * (slides.length - 1)) {  //через регулярное выражение, вынесенное в функцию
+      offset = 0;
+  } else {
+      offset += deleteWord(width);
+  }
+  slidesField.style.transform = `translateX(-${offset}px)`;
+
+  if (slideIndex == slides.length) {
+      slideIndex = 1;
+  } else {
+      slideIndex++;
+  }
+
+  Chekindex();
+  Dotactive();
+}, 3000);
+});
 
 next.addEventListener('click', () => {
   //if(offset == +width.slice(0, width.length - 2)) * (slides.length - 1)) { //width.length ('500px') - 2, чтобы убрать px при приведении к числу
@@ -559,7 +502,7 @@ next.addEventListener('click', () => {
   Dotactive();
 });
 
-prev.addEventListener('click', () => {
+prev.addEventListener('click', () => {  
   if (offset == 0){
       offset = deleteWord(width) * (slides.length - 1);
       
@@ -828,15 +771,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_scroll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/scroll */ "./js/modules/scroll.js");
 /* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/slider */ "./js/modules/slider.js");
 /* harmony import */ var _modules_calc__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/calc */ "./js/modules/calc.js");
-/* harmony import */ var _modules_cards__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/cards */ "./js/modules/cards.js");
-/* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/forms */ "./js/modules/forms.js");
-/* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/timer */ "./js/modules/timer.js");
+/* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/forms */ "./js/modules/forms.js");
+/* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/timer */ "./js/modules/timer.js");
                   //ES6
 
 
 
 
-
+// import cards from './modules/cards';
 
 
 
@@ -870,9 +812,9 @@ window.addEventListener('DOMContentLoaded', () => {
         field: '.offer__slider-inner'
     });
     (0,_modules_calc__WEBPACK_IMPORTED_MODULE_4__.default)();
-    (0,_modules_cards__WEBPACK_IMPORTED_MODULE_5__.default)();
-    (0,_modules_forms__WEBPACK_IMPORTED_MODULE_6__.default)('form', modalTimerId);
-    (0,_modules_timer__WEBPACK_IMPORTED_MODULE_7__.default)('.timer', '2021-08-01');
+    // cards();
+    (0,_modules_forms__WEBPACK_IMPORTED_MODULE_5__.default)('form', modalTimerId);
+    (0,_modules_timer__WEBPACK_IMPORTED_MODULE_6__.default)('.timer', '2021-08-01');
 
 });
 })();
